@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
+    </style>
+
+    <!-- dummy Symbol polyfill -->
+    <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
+
+    <!-- colyseus.js client -->
+    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/master/dist/colyseus.js"></script>
+
+  </head>
+  <body>
+    <h1><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus"></h1>
+    <strong>Messages</strong><br>
+
+    <form id="form">
+      <input type="text" id="input" value="" />
+      <input type="submit" value="send" />
+    </form>
+
+    <div id="messages"></div>
+
+    <script>
+      var state = null
+
+      var host = window.document.location.host.replace(/:.*/, '');
+      var client = new Colyseus.Client('ws://' + host + ':2657');
+
+      client.onOpen.add(function (event) {
+        console.log(client.id, "connected!")
+      });
+
+      client.onMessage.add(function (event) {
+        console.log("Client received message!", event)
+      });
+
+      client.onClose.add(function (event) {
+        console.log("closing connection...")
+      });
+
+      var invalidRoom = client.join("non_existing_room")
+      invalidRoom.onError.add(function(error) {
+        console.error(error)
+      });
+
+      var chatRoom = client.join("chat")
+      chatRoom.onError.add(function(error) {
+        console.error(error)
+      });
+
+      chatRoom.onJoin.add(function() {
+        console.log(client.id, "joined", chatRoom.name)
+      });
+
+      chatRoom.onLeave.add(function() {
+        console.log(client.id, "leaved", chatRoom.name)
+      });
+
+      chatRoom.onData.add(function(data) {
+        console.log(client.id, "received on", chatRoom.name, data)
+      });
+
+      chatRoom.onUpdate.addOnce(function(state) {
+        console.log("setup:", state)
+
+        // setup initial messages
+        for (var i=0; i<state.messages.length; i++) {
+          var node = document.createElement("p");
+          node.innerHTML = state.messages[i]
+          document.getElementById('messages').appendChild(node)
+        }
+      });
+
+      chatRoom.state.listen("messages/:number", "add", function(i, value) {
+        var node = document.createElement("p");
+        node.innerHTML = value;
+        document.getElementById('messages').appendChild(node);
+      });
+
+      chatRoom.onUpdate.add(function(state) {
+        console.log("update:", state)
+      });
+
+      document.getElementById('form').onsubmit = function(e) {
+        e.preventDefault()
+        client.send( {message: document.getElementById('input').value} )
+        document.getElementById('input').value = null
+      }
+
+    </script>
+  </body>
+</html>
