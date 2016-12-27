@@ -29,65 +29,31 @@
       var host = window.document.location.host.replace(/:.*/, '');
       var client = new Colyseus.Client('ws://' + host + ':2657');
 
-      client.onOpen.add(function (event) {
-        console.log(client.id, "connected!")
-      });
-
-      client.onMessage.add(function (event) {
-        console.log("Client received message!", event)
-      });
-
-      client.onClose.add(function (event) {
-        console.log("closing connection...")
-      });
-
-      var invalidRoom = client.join("non_existing_room")
-      invalidRoom.onError.add(function(error) {
-        console.error(error)
-      });
-
-      var chatRoom = client.join("chat")
-      chatRoom.onError.add(function(error) {
-        console.error(error)
-      });
-
-      chatRoom.onJoin.add(function() {
-        console.log(client.id, "joined", chatRoom.name)
-      });
-
-      chatRoom.onLeave.add(function() {
-        console.log(client.id, "leaved", chatRoom.name)
-      });
-
-      chatRoom.onData.add(function(data) {
-        console.log(client.id, "received on", chatRoom.name, data)
-      });
+      var chatRoom = client.join("chat");
 
       chatRoom.onUpdate.addOnce(function(state) {
-        console.log("setup:", state)
+        console.log("initial setup:", state);
 
         // setup initial messages
         for (var i=0; i<state.messages.length; i++) {
-          var node = document.createElement("p");
-          node.innerHTML = state.messages[i]
-          document.getElementById('messages').appendChild(node)
+          addMessage(state.messages[i]);
         }
       });
 
       chatRoom.state.listen("messages/:number", "add", function(i, value) {
-        var node = document.createElement("p");
-        node.innerHTML = value;
-        document.getElementById('messages').appendChild(node);
-      });
-
-      chatRoom.onUpdate.add(function(state) {
-        console.log("update:", state)
+        addMessage(value);
       });
 
       document.getElementById('form').onsubmit = function(e) {
-        e.preventDefault()
-        client.send( {message: document.getElementById('input').value} )
-        document.getElementById('input').value = null
+        e.preventDefault();
+        client.send({ message: document.getElementById('input').value });
+        document.getElementById('input').value = null;
+      }
+
+      function addMessage (message) {
+        var node = document.createElement("p");
+        node.innerHTML = message;
+        document.getElementById('messages').appendChild(node);
       }
 
     </script>
