@@ -1,6 +1,6 @@
-var Room = require('colyseus').Room;
+import { Room } from "colyseus";
 
-class ChatRoom extends Room {
+export class ChatRoom extends Room<any> {
 
   constructor ( options ) {
     super( options );
@@ -27,5 +27,3 @@ class ChatRoom extends Room {
   }
 
 }
-
-module.exports = ChatRoom;

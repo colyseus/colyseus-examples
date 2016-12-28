@@ -1,19 +1,20 @@
-const path = require('path');
-const colyseus = require('colyseus');
-const http = require('http');
-const express = require('express');
-const serveIndex = require('serve-index');
+import * as path from 'path';
+import * as express from 'express';
+import * as serveIndex from 'serve-index';
+import { createServer } from 'http';
+import { Server } from 'colyseus';
+
+// Require ChatRoom handler
+import { ChatRoom } from "./rooms/01-basic";
+
 const port = process.env.PORT || 2657;
 const app = express();
 
 // Create HTTP Server
-const server = http.createServer(app);
+const httpServer = createServer(app);
 
 // Attach WebSocket Server on HTTP Server.
-const gameServer = new colyseus.Server({ server: server });
-
-// Require Chat
-const ChatRoom = require('./rooms/01-basic');
+const gameServer = new Server({ server: httpServer });
 
 // Register ChatRoom as "chat"
 gameServer.register("chat", ChatRoom);
@@ -21,6 +22,6 @@ gameServer.register("chat", ChatRoom);
 app.use(express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
 
-server.listen(port);
+httpServer.listen(port);
 
 console.log(`Listening on http://localhost:${ port }`);

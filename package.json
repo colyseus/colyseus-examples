@@ -4,7 +4,7 @@
   "description": "Usage Examples of Colyseus Game Server",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "tsc && node index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +13,8 @@
     "colyseus.js": "^0.6.0-alpha.1",
     "express": "^4.14.0",
     "serve-index": "^1.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.1.4"
   }
 }
