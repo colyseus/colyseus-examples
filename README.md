@@ -1,6 +1,8 @@
 colyseus-examples
 ===
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/gamestdio/colyseus-examples.svg)](https://greenkeeper.io/)
+
 How to run
 ---
 
