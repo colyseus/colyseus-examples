@@ -12,6 +12,7 @@
     "colyseus": "^0.4.4",
     "colyseus.js": "^0.6.0-alpha.1",
     "express": "^4.14.0",
+    "nodemon": "^1.11.0",
     "serve-index": "^1.8.0"
   },
   "devDependencies": {

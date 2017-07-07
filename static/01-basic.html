@@ -24,24 +24,43 @@
     <div id="messages"></div>
 
     <script>
-      var state = null
-
       var host = window.document.location.host.replace(/:.*/, '');
       var client = new Colyseus.Client('ws://' + host + ':2657');
 
       var chatRoom = client.join("chat");
 
       chatRoom.onUpdate.addOnce(function(state) {
-        console.log("initial setup:", state);
+        console.log("initial room data:", state);
       });
 
+      // new room state
       chatRoom.onUpdate.add(function(state) {
-        console.log(Date.now(), chatRoom._previousState);
+        // this signal is triggered on each patch
+      });
+
+      // listen to patches coming from the server
+      chatRoom.state.listen("messages/:number", "add", function(path, value) {
+        var p = document.createElement("p");
+        p.innerHTML = value;
+        document.querySelector("#messages").appendChild(p);
       });
 
       chatRoom.state.listen(function(path, operation, value) {
-        // console.log(path, operation, value)
+        console.log("patch:", path, operation, value)
       });
+
+      // send data to room on submit
+      document.querySelector("#form").onsubmit = function(e) {
+        e.preventDefault();
+
+        var input = document.querySelector("#input");
+
+        // send data to room
+        chatRoom.send({ message: input.value });
+
+        // clear input
+        input.value = "";
+      }
 
     </script>
   </body>
