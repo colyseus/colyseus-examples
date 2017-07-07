@@ -8,8 +8,8 @@
     <!-- dummy Symbol polyfill -->
     <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
 
-    <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/master/dist/colyseus.js"></script>
+    <!-- colyseus.js 0.6.0 client -->
+    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/0.6.0/dist/colyseus.js"></script>
 
   </head>
   <body>
@@ -33,28 +33,15 @@
 
       chatRoom.onUpdate.addOnce(function(state) {
         console.log("initial setup:", state);
-
-        // setup initial messages
-        for (var i=0; i<state.messages.length; i++) {
-          addMessage(state.messages[i]);
-        }
       });
 
-      chatRoom.state.listen("messages/:number", "add", function(i, value) {
-        addMessage(value);
+      chatRoom.onUpdate.add(function(state) {
+        console.log(Date.now(), chatRoom._previousState);
       });
 
-      document.getElementById('form').onsubmit = function(e) {
-        e.preventDefault();
-        client.send({ message: document.getElementById('input').value });
-        document.getElementById('input').value = null;
-      }
-
-      function addMessage (message) {
-        var node = document.createElement("p");
-        node.innerHTML = message;
-        document.getElementById('messages').appendChild(node);
-      }
+      chatRoom.state.listen(function(path, operation, value) {
+        // console.log(path, operation, value)
+      });
 
     </script>
   </body>
