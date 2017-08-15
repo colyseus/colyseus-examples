@@ -8,8 +8,8 @@
     <!-- dummy Symbol polyfill -->
     <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
 
-    <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/master/dist/colyseus.js"></script>
+    <!-- colyseus.js 0.6.0 client -->
+    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/0.6.0/dist/colyseus.js"></script>
 
   </head>
   <body>
@@ -24,36 +24,42 @@
     <div id="messages"></div>
 
     <script>
-      var state = null
-
       var host = window.document.location.host.replace(/:.*/, '');
       var client = new Colyseus.Client('ws://' + host + ':2657');
 
       var chatRoom = client.join("chat");
 
       chatRoom.onUpdate.addOnce(function(state) {
-        console.log("initial setup:", state);
-
-        // setup initial messages
-        for (var i=0; i<state.messages.length; i++) {
-          addMessage(state.messages[i]);
-        }
+        console.log("initial room data:", state);
       });
 
-      chatRoom.state.listen("messages/:number", "add", function(i, value) {
-        addMessage(value);
+      // new room state
+      chatRoom.onUpdate.add(function(state) {
+        // this signal is triggered on each patch
       });
 
-      document.getElementById('form').onsubmit = function(e) {
+      // listen to patches coming from the server
+      chatRoom.state.listen("messages/:number", "add", function(path, value) {
+        var p = document.createElement("p");
+        p.innerHTML = value;
+        document.querySelector("#messages").appendChild(p);
+      });
+
+      chatRoom.state.listen(function(path, operation, value) {
+        console.log("patch:", path, operation, value)
+      });
+
+      // send data to room on submit
+      document.querySelector("#form").onsubmit = function(e) {
         e.preventDefault();
-        client.send({ message: document.getElementById('input').value });
-        document.getElementById('input').value = null;
-      }
 
-      function addMessage (message) {
-        var node = document.createElement("p");
-        node.innerHTML = message;
-        document.getElementById('messages').appendChild(node);
+        var input = document.querySelector("#input");
+
+        // send data to room
+        chatRoom.send({ message: input.value });
+
+        // clear input
+        input.value = "";
       }
 
     </script>
