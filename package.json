@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colyseus": "0.5.0-alpha.12",
+    "colyseus": "^0.5.0",
     "express": "^4.14.0",
     "serve-index": "^1.8.0"
   },
