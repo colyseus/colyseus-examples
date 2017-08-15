@@ -9,12 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colyseus": "^0.4.4",
-    "colyseus.js": "^0.6.0-alpha.1",
+    "colyseus": "0.5.0-alpha.12",
     "express": "^4.14.0",
     "serve-index": "^1.8.0"
   },
   "devDependencies": {
-    "typescript": "^2.1.4"
+    "typescript": "^2.4.2"
   }
 }
