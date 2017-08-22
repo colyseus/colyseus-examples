@@ -8,8 +8,8 @@
     <!-- dummy Symbol polyfill -->
     <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
 
-    <!-- colyseus.js 0.6.0 client -->
-    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/0.6.0/dist/colyseus.js"></script>
+    <!-- colyseus.js 0.7.0 client -->
+    <script type="text/javascript" src="https://rawgit.com/gamestdio/colyseus.js/0.7.0/dist/colyseus.js"></script>
 
   </head>
   <body>
@@ -39,14 +39,14 @@
       });
 
       // listen to patches coming from the server
-      chatRoom.state.listen("messages/:number", "add", function(path, value) {
+      chatRoom.listen("messages/:number", function(change) {
         var p = document.createElement("p");
-        p.innerHTML = value;
+        p.innerHTML = change.value;
         document.querySelector("#messages").appendChild(p);
       });
 
-      chatRoom.state.listen(function(path, operation, value) {
-        console.log("patch:", path, operation, value)
+      chatRoom.listen(function(change) {
+        console.log("patch:", change.path, change.operation, change.value)
       });
 
       // send data to room on submit
