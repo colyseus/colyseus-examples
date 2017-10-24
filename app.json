@@ -1,0 +1,10 @@
+{
+  "name": "Colyseus Multiplayer Game Server",
+  "description": "Colyseus Multiplayer Game Server",
+  "repository": "https://github.com/gamestdio/colyseus",
+  "logo": "https://github.com/gamestdio/colyseus/blob/master/media/logo.png?raw=true",
+  "keywords": ["node", "multiplayer", "colyseus"],
+  "env": {
+    "NPM_CONFIG_PRODUCTION": false
+  }
+}

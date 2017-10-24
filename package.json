@@ -4,17 +4,20 @@
   "description": "Usage Examples of Colyseus Game Server",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node index.js"
+    "start": "tsc && npm run bundle-colyseus-client && node index.js",
+    "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "colyseus": "^0.5.2",
+    "colyseus": "^0.5.10",
+    "colyseus.js": "^0.7.3",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
     "serve-index": "^1.8.0"
   },
   "devDependencies": {
+    "browserify": "^14.4.0",
     "typescript": "^2.4.2"
   }
 }

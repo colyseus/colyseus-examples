@@ -18,6 +18,7 @@ const gameServer = new Server({ server: httpServer });
 
 // Register ChatRoom as "chat"
 gameServer.register("chat", ChatRoom);
+gameServer.register("chat_2", ChatRoom);
 
 app.use(express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
