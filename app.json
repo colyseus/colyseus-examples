@@ -1,6 +1,6 @@
 {
-  "name": "Colyseus Multiplayer Game Server",
-  "description": "Colyseus Multiplayer Game Server",
+  "name": "Colyseus Multiplayer",
+  "description": "Multiplayer Game Server for Node.js",
   "repository": "https://github.com/gamestdio/colyseus",
   "logo": "https://github.com/gamestdio/colyseus/blob/master/media/logo.png?raw=true",
   "keywords": ["node", "multiplayer", "colyseus"],
