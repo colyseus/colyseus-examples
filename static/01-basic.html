@@ -27,36 +27,6 @@
       var host = window.document.location.host.replace(/:.*/, '');
 
       var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':'+location.port : ''));
-
-      var chatRoom_2 = client.join("chat_2");;
-      chatRoom_2.onJoin.add(function () {
-        console.log("joined chat_2");
-      });
-
-      chatRoom_2.onUpdate.addOnce(function(state) {
-        console.log("initial room data:", state);
-      });
-
-      // new room state
-      chatRoom_2.onUpdate.add(function(state) {
-        // this signal is triggered on each patch
-      });
-
-      chatRoom_2.listen("players/current", function(change) {
-        console.log(change);
-      });
-
-      // listen to patches coming from the server
-      chatRoom_2.listen("messages/:number", function(change) {
-        var p = document.createElement("p");
-        p.innerHTML = change.value;
-        document.querySelector("#messages").appendChild(p);
-      });
-
-      chatRoom_2.listen(function(change) {
-        console.log("patch:", change.path, change.operation, change.value)
-      });
-
       var chatRoom = client.join("chat");
       chatRoom.onJoin.add(function () {
         console.log("joined chat");
@@ -96,7 +66,6 @@
 
         // send data to room
         chatRoom.send({ message: input.value });
-        chatRoom_2.send({ message: input.value });
 
         // clear input
         input.value = "";
