@@ -4,7 +4,7 @@
   "description": "Usage Examples of Colyseus Game Server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch '**/*.ts' --exec 'ts-node' index.ts",
+    "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
     "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
     "build": "tsc && npm run bundle-colyseus-client",
     "heroku-prebuild": "npm run build"
