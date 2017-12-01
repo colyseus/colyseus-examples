@@ -19,11 +19,11 @@
     "colyseus.js": "^0.8.0",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
-    "serve-index": "^1.8.0"
-  },
-  "devDependencies": {
+    "serve-index": "^1.8.0",
+
     "browserify": "^14.4.0",
     "ts-node": "^3.3.0",
     "typescript": "^2.4.2"
-  }
+  },
+  "devDependencies": {}
 }
