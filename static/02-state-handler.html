@@ -25,7 +25,9 @@
 
   </head>
   <body>
-    <h1><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus"></h1>
+    <h1>
+      <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus" /></a>
+    </h1>
     <strong>commands</strong><br>
 
     <button onclick="send({y: -1})">up</button>
@@ -65,8 +67,8 @@
       room.listen("players/:id/:axis", function(change) {
         var dom = players[ change.path.id ];
 
-        var styleAttribute = (change.path.axis === "x") 
-          ? "left" 
+        var styleAttribute = (change.path.axis === "x")
+          ? "left"
           : "top";
 
         dom.style[ styleAttribute ] = change.value + "px";
