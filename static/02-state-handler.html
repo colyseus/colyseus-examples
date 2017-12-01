@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
+    </style>
+
+    <!-- dummy Symbol polyfill -->
+    <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
+
+    <!-- colyseus.js client (npm run bundle-colyseus-client) -->
+    <script type="text/javascript" src="colyseus.js"></script>
+
+    <style type="text/css">
+      .player {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        padding-top: 24px;
+        box-sizing: border-box;
+        left: 0;
+        top: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h1><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus"></h1>
+    <strong>commands</strong><br>
+
+    <button onclick="send({y: -1})">up</button>
+    <button onclick="send({y: 1})">down</button>
+    <br />
+    <button onclick="send({x: -1})">left</button>
+    <button onclick="send({x: 1})">right</button>
+
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+
+      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':' + location.port : ''));
+      var room = client.join("state_handler");
+
+      var players = {};
+      var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
+
+      // listen to patches coming from the server
+      room.listen("players/:id", function(change) {
+        if (change.operation === "add") {
+          var dom = document.createElement("div");
+          dom.className = "player";
+          dom.style.left = change.value.x + "px";
+          dom.style.top = change.value.y + "px";
+          dom.style.background = colors[Math.floor(Math.random() * colors.length)];
+          dom.innerHTML = `Player '${change.path.id}'`;
+
+          players[change.path.id] = dom;
+          document.body.appendChild(dom);
+
+        } else if (change.operation === "remove") {
+          document.body.removeChild(players[ change.path.id ]);
+          delete players[change.path.id];
+        }
+      });
+
+      room.listen("players/:id/:axis", function(change) {
+        var dom = players[ change.path.id ];
+
+        var styleAttribute = (change.path.axis === "x") 
+          ? "left" 
+          : "top";
+
+        dom.style[ styleAttribute ] = change.value + "px";
+      });
+
+      function send (data) {
+        room.send(data);
+      }
+
+    </script>
+  </body>
+</html>

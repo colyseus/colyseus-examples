@@ -1,36 +1,32 @@
 import { Room } from "colyseus";
 
-export class ChatRoom extends Room {
+export class BasicRoom extends Room {
+    // this room supports only 4 clients connected
+    maxClients = 4;
 
     onInit (options) {
-        this.setState({ messages: [], players: { current: 0 } });
-        console.log("ChatRoom created!", options);
+        console.log("BasicRoom created!", options);
 
-        setInterval(() => {
-            this.state.players.current++;
-            console.log("Hey!");
-        }, 1000);
-    }
-
-    requestJoin () {
-        return this.clients.length < 2;
+        this.setState({
+            messages: []
+        });
     }
 
     onJoin (client) {
-        this.state.messages.push(`${ client.id } joined.`);
+        this.state.messages.push(`${ client.sessionId } joined.`);
     }
 
     onLeave (client) {
-        this.state.messages.push(`${ client.id } left.`);
+        this.state.messages.push(`${ client.sessionId } left.`);
     }
 
     onMessage (client, data) {
-        this.state.messages.push(data.message);
-        console.log("ChatRoom:", client.id, data);
+        this.state.messages.push(`(${ client.sessionId }) ${ data.message }`);
+        console.log("BasicRoom received message from", client.sessionId, ":", data);
     }
 
     onDispose () {
-        console.log("Dispose ChatRoom");
+        console.log("Dispose BasicRoom");
     }
 
 }
