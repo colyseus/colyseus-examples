@@ -8,6 +8,10 @@
     "NPM_CONFIG_PRODUCTION": {
       "description": "Leave as 'false' to install required devDependencies.",
       "value": "false"
+    },
+    "NODE_MODULES_CACHE": {
+      "description": "Cache node_modules",
+      "value": "false"
     }
   }
 }
