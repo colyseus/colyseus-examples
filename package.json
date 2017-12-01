@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
     "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
-    "build": "tsc && npm run bundle-colyseus-client",
+    "build": "npm run bundle-colyseus-client && tsc",
     "heroku-prebuild": "npm run build"
   },
   "engines": {
