@@ -1,7 +1,10 @@
-import { Room, EntityMap, Client } from "colyseus";
+import { Room, EntityMap, Client, nosync } from "colyseus";
 
 class State {
     players: EntityMap<Player> = {};
+
+    @nosync
+    something = "This attribute won't be sent to the client-side";
 
     createPlayer (id: string) {
         this.players[ id ] = new Player();
