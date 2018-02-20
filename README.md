@@ -27,7 +27,7 @@ Links
 
 - [Colyseus Game Server](https://github.com/gamestdio/colyseus/)
 - [JavaScript Client](https://github.com/gamestdio/colyseus.js/)
-- [Documentation](https://github.com/gamestdio/colyseus/wiki)
+- [Documentation](http://colyseus.io/docs/)
 
 License
 ---
