@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
+    </style>
+
+    <!-- dummy Symbol polyfill -->
+    <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
+
+    <!-- colyseus.js client (npm run bundle-colyseus-client) -->
+    <script type="text/javascript" src="colyseus.js"></script>
+
+  </head>
+  <body>
+    <h1>
+      <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus" /></a>
+    </h1>
+
+    <p>This room doesn't use the room's state. It just broadcast messages through "broadcast" method.</p>
+
+    <strong>Messages</strong><br>
+
+    <form id="form">
+      <input type="text" id="input" value="" />
+      <input type="submit" value="send" />
+    </form>
+
+    <div id="messages"></div>
+
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+
+      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':'+location.port : ''));
+      var room = client.join("chat");
+      room.onJoin.add(function () {
+        console.log("joined");
+      });
+
+      room.onStateChange.addOnce(function(state) {
+        console.log("initial room state:", state);
+      });
+
+      // new room state
+      room.onStateChange.add(function(state) {
+        // this signal is triggered on each patch
+      });
+
+      // listen to patches coming from the server
+      room.onMessage.add(function(message) {
+        var p = document.createElement("p");
+        p.innerHTML = message;
+        document.querySelector("#messages").appendChild(p);
+      });
+
+      // send message to room on submit
+      document.querySelector("#form").onsubmit = function(e) {
+        e.preventDefault();
+
+        var input = document.querySelector("#input");
+
+        console.log("input:", input.value);
+
+        // send data to room
+        room.send({ message: input.value });
+
+        // clear input
+        input.value = "";
+      }
+
+    </script>
+  </body>
+</html>
