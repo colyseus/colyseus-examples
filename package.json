@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
     "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
-    "build": "npm run bundle-colyseus-client && tsc",
+    "build": "npm run bundle-colyseus-client",
     "heroku-postbuild": "npm run build"
   },
   "engines": {
@@ -16,8 +16,8 @@
   "license": "ISC",
   "dependencies": {
     "@types/uws": "^0.13.1",
-    "colyseus": "^0.8.11",
-    "colyseus.js": "^0.8.0",
+    "colyseus": "^0.9.0-alpha.8",
+    "colyseus.js": "^0.9.0-alpha.4",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
     "serve-index": "^1.8.0",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "browserify": "^14.4.0",
-    "ts-node": "^3.3.0",
-    "typescript": "^2.4.2"
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
   }
 }

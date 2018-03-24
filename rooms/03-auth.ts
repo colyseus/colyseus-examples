@@ -9,7 +9,7 @@ export class AuthRoom extends Room {
         this.setState({});
     }
 
-    async verifyClient (client: Client, options: any) {
+    async onAuth (options: any) {
         const response = await request.get(`https://graph.facebook.com/debug_token`).
             query({
                 input_token: options.accessToken,
@@ -17,7 +17,7 @@ export class AuthRoom extends Room {
             }).
             set('Accept', 'application/json');
 
-        return response.body.data.user_id > 0;
+        return response.body.data;
     }
 
     onJoin (client) {

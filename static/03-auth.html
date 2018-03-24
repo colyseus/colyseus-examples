@@ -16,18 +16,20 @@
       <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus" /></a>
     </h1>
 
+    <p>This example shows how to authenticate and retrieve user data before the websocket handshake.</p>
+
+    <p>Open Developer Tools for log messages.</p>
+
     <p><strong>Commands</strong></p>
 
     <button onclick="login()">login</button>
     <button onclick="join_without_token()">try to join without token</button>
 
-    <p>Open Developer Tools for log messages.</p>
-
     <script>
         window.fbAsyncInit = function () {
             FB.init({
                 appId: '135829507120512',
-                cookie: true,  // enable cookies to allow the server to access 
+                cookie: true,  // enable cookies to allow the server to access
                 // the session
                 xfbml: true,  // parse social plugins on this page
                 version: 'v2.8' // use graph api version 2.8
@@ -60,7 +62,7 @@
               if (response.status === 'connected') {
                   // Logged into your app and Facebook.
                   room = client.join("auth", {
-                      accessToken: response.authResponse.accessToken 
+                      accessToken: response.authResponse.accessToken
                   });
                   room.onJoin.add(function (e) {
                       console.log("Joined successfully!");

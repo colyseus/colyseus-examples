@@ -28,13 +28,16 @@
     <h1>
       <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus" /></a>
     </h1>
+
+    <p>This example shows how to use custom data structures in your room's state.</p>
+
     <strong>commands</strong><br>
 
-    <button onclick="send({y: -1})">up</button>
-    <button onclick="send({y: 1})">down</button>
+    <button onclick="up()">up</button>
+    <button onclick="down()">down</button>
     <br />
-    <button onclick="send({x: -1})">left</button>
-    <button onclick="send({x: 1})">right</button>
+    <button onclick="left()">left</button>
+    <button onclick="right()">right</button>
 
     <script>
       var host = window.document.location.host.replace(/:.*/, '');
@@ -74,8 +77,36 @@
         dom.style[ styleAttribute ] = change.value + "px";
       });
 
-      function send (data) {
-        room.send(data);
+      window.addEventListener("keydown", function (e) {
+        console.log(e.which);
+        if (e.which === 38) {
+          up();
+
+        } else if (e.which === 39) {
+          right();
+
+        } else if (e.which === 40) {
+          down();
+
+        } else if (e.which === 37) {
+          left();
+        }
+      });
+
+      function up () {
+        room.send({ y: -1 });
+      }
+
+      function right () {
+        room.send({ x: 1 });
+      }
+
+      function down () {
+        room.send({ y: 1 })
+      }
+
+      function left () {
+        room.send({ x: -1 })
       }
 
     </script>

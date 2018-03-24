@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
+    </style>
+
+    <!-- dummy Symbol polyfill -->
+    <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
+
+    <!-- colyseus.js client (npm run bundle-colyseus-client) -->
+    <script type="text/javascript" src="colyseus.js"></script>
+  </head>
+  <body>
+    <h1>
+      <a href="https://github.com/gamestdio/colyseus-examples"><img src="https://rawgit.com/gamestdio/colyseus/master/media/header.png" height="100" alt="colyseus" /></a>
+    </h1>
+
+    <p>
+      On this example, the room has its `maxClients` set to 4, and its
+      `requestJoin` method is configured to allow explicitly creating new
+      rooms, or joining an existing one.
+    </p>
+
+    <p>Open Developer Tools for log messages.</p>
+
+    <strong>commands</strong><br>
+
+    <button onclick="join()">Join</button>
+    <button onclick="create()">Create</button>
+    <button onclick="joinByLastId()">Join by last id</button>
+    <button onclick="getAvailableRooms()">List avaiable rooms</button>
+
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':'+location.port : ''));
+      var room;
+
+      client.onOpen.add(function() {
+          console.log("onOpen")
+      });
+
+      function addListeners (room) {
+          room.onJoin.add(function() {
+              console.log(room.id);
+              console.log('joined!');
+          })
+
+          room.onLeave.add(function() {
+              console.log("LEFT ROOM", arguments);
+          });
+
+          room.onStateChange.add(function(data) {
+              console.log("chat update: ", data)
+          });
+      }
+
+      function join () {
+          room = client.join('create_or_join');
+          addListeners(room);
+      }
+
+      function create () {
+          room = client.join('create_or_join', { create: true });
+          addListeners(room);
+      }
+
+      function joinByLastId () {
+          room = client.join(room.id);
+          addListeners(room);
+      }
+
+      function getAvailableRooms() {
+          client.getAvailableRooms('create_or_join', function(rooms, err) {
+                console.log(rooms);
+          });
+      }
+    </script>
+
+
+  </body>
+</html>
