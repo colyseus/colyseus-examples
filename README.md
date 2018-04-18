@@ -3,7 +3,7 @@ colyseus-examples
 
 Official Colyseus Examples.
 
-- [Live examples](http://colyseus-examples.herokuapp.com/)
+- [See live](http://colyseus-examples.herokuapp.com/)
 - [See monitor](http://colyseus-examples.herokuapp.com/colyseus)
 
 Consider backing Colyseus development and its support on Patreon.
