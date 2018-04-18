@@ -3,6 +3,7 @@ import * as express from 'express';
 import * as serveIndex from 'serve-index';
 import { createServer } from 'http';
 import { Server } from 'colyseus';
+import { monitor } from '@colyseus/monitor';
 
 // Require ChatRoo handler
 import { ChatRoom } from "./rooms/01-chat-room";
@@ -36,8 +37,11 @@ gameServer.register("auth", AuthRoom);
 // Register CreateOrJoin as "create_or_join"
 gameServer.register("create_or_join", CreateOrJoinRoom);
 
-app.use(express.static(path.join(__dirname, "static")));
+app.use('/', express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
+
+// attach web monitoring panel
+app.use('/colyseus', monitor(gameServer));
 
 gameServer.listen(port);
 console.log(`Listening on http://localhost:${ port }`);
