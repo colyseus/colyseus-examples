@@ -1,6 +1,11 @@
 colyseus-examples
 ===
 
+Official Colyseus Examples.
+
+- [Live examples](http://colyseus-examples.herokuapp.com/)
+- [See monitor](http://colyseus-examples.herokuapp.com/colyseus)
+
 Consider backing Colyseus development and its support on Patreon.
 
 <a href="https://www.patreon.com/bePatron?u=3301115"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" /></a>
