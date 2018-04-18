@@ -40,7 +40,7 @@ gameServer.register("create_or_join", CreateOrJoinRoom);
 app.use('/', express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
 
-// attach web monitoring panel
+// (optional) attach web monitoring panel
 app.use('/colyseus', monitor(gameServer));
 
 gameServer.listen(port);
