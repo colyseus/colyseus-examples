@@ -1,6 +1,6 @@
 import { Room, EntityMap, Client, nosync } from "colyseus";
 
-class State {
+export class State {
     players: EntityMap<Player> = {};
 
     @nosync
@@ -24,7 +24,7 @@ class State {
     }
 }
 
-class Player {
+export class Player {
     x = Math.floor(Math.random() * 400);
     y = Math.floor(Math.random() * 400);
 }
