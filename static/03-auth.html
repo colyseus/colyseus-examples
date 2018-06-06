@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width" />
+
     <style>
       body { font-family: Tahoma, Geneva, sans-serif; text-align: center; }
     </style>
-
-    <!-- dummy Symbol polyfill -->
-    <script>if (typeof(Symbol)==="undefined") { window.Symbol = function(arg) { return arg; } }</script>
 
     <!-- colyseus.js client (npm run bundle-colyseus-client) -->
     <script type="text/javascript" src="colyseus.js"></script>
