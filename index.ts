@@ -21,6 +21,9 @@ const gameServer = new Server({
   server: createServer(app)
 });
 
+// Register ChatRoom as "chat"
+gameServer.register("chat", ChatRoom);
+
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
 gameServer.register("chat_with_options", ChatRoom, {
