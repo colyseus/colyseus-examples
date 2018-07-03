@@ -12,6 +12,14 @@ export class CreateOrJoinRoom extends Room<any> {
     }
 
     requestJoin (options, isNewRoom: boolean) {
+        console.log("requestJoin", this.roomId, "isNewRoom?", isNewRoom);
+        try {
+            throw new Error();
+
+        } catch (e) {
+            console.log(e.stack);
+        }
+
         return (options.create)
             ? (options.create && isNewRoom)
             : this.clients.length > 0;

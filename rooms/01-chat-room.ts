@@ -1,11 +1,12 @@
 import { Room } from "colyseus";
 
 export class ChatRoom extends Room {
-    // this room supports only 4 clients connected
-    maxClients = 4;
-
     onInit (options) {
         console.log("BasicRoom created!", options);
+    }
+
+    requestJoin () {
+        return this.clients.length === 0;
     }
 
     onJoin (client) {
