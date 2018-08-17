@@ -16,14 +16,12 @@
   "license": "ISC",
   "dependencies": {
     "@colyseus/monitor": "^0.1.7",
-    "@types/uws": "^0.13.1",
     "colyseus": "^0.9.11",
     "colyseus.js": "^0.9.6",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
     "serve-index": "^1.8.0",
-    "superagent": "^3.8.1",
-    "uws": "^10.148.0"
+    "superagent": "^3.8.1"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
