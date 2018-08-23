@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "@colyseus/monitor": "^0.1.7",
-    "colyseus": "^0.9.11",
+    "colyseus": "^0.9.15",
     "colyseus.js": "^0.9.6",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
