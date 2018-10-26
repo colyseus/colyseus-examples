@@ -4,11 +4,11 @@ export class CreateOrJoinRoom extends Room<any> {
     maxClients = 4;
 
     onInit (options) {
-        console.log("JOINING ROOM");
+        console.log("CREATING NEW ROOM");
     }
 
     onJoin (client, options, auth) {
-        console.log("CREATING NEW ROOM");
+        console.log("JOINING ROOM");
     }
 
     requestJoin (options, isNewRoom: boolean) {
