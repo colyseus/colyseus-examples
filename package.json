@@ -18,6 +18,7 @@
     "@colyseus/monitor": "^0.1.7",
     "colyseus": "^0.9.15",
     "colyseus.js": "^0.9.6",
+    "combined-stream": "^1.0.7",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
     "serve-index": "^1.8.0",
