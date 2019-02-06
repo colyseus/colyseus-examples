@@ -38,7 +38,7 @@ npm run bundle-colyseus-client
 npm start
 ```
 
-Open [http://localhost:2567](http://localhost:2657) in your browser.
+Open [http://localhost:2567](http://localhost:2567) in your browser.
 
 ## Deployment for prototyping
 
