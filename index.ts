@@ -48,4 +48,10 @@ gameServer.onShutdown(function(){
 });
 
 gameServer.listen(port);
+
+// process.on("uncaughtException", (e) => {
+//   console.log(e.stack);
+//   process.exit(1);
+// });
+
 console.log(`Listening on http://localhost:${ port }`);

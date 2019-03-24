@@ -32,6 +32,10 @@
 
       var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':'+location.port : ''));
       var room = client.join("chat");
+      room.listen("messages/:index", function(change) {
+        console.log("CHANGE!", change);
+      });
+
       room.onJoin.add(function () {
         console.log("joined");
       });

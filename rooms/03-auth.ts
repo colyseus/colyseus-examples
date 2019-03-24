@@ -6,7 +6,6 @@ const FACEBOOK_APP_TOKEN = "135829507120512|3a97320bee18f2286d6243dcf4cc7a23";
 export class AuthRoom extends Room {
     onInit (options) {
         console.log("StateHandlerRoom created!", options);
-        this.setState({});
     }
 
     async onAuth (options: any) {

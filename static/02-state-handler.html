@@ -47,33 +47,30 @@
       var players = {};
       var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
 
-      // listen to patches coming from the server
-      room.listen("players/:id", function(change) {
-        if (change.operation === "add") {
+      room.onJoin.add(function() {
+        // listen to patches coming from the server
+        room.state.players.onAdd = function(player, sessionId) {
           var dom = document.createElement("div");
           dom.className = "player";
-          dom.style.left = change.value.x + "px";
-          dom.style.top = change.value.y + "px";
+          dom.style.left = player.x + "px";
+          dom.style.top = player.y + "px";
           dom.style.background = colors[Math.floor(Math.random() * colors.length)];
-          dom.innerHTML = "Player " + change.path.id;
+          dom.innerHTML = "Player " + sessionId;
 
-          players[change.path.id] = dom;
+          players[sessionId] = dom;
           document.body.appendChild(dom);
-
-        } else if (change.operation === "remove") {
-          document.body.removeChild(players[ change.path.id ]);
-          delete players[change.path.id];
         }
-      });
 
-      room.listen("players/:id/:axis", function(change) {
-        var dom = players[ change.path.id ];
+        room.state.players.onRemove = function(player, sessionId) {
+          document.body.removeChild(players[sessionId]);
+          delete players[sessionId];
+        }
 
-        var styleAttribute = (change.path.axis === "x")
-          ? "left"
-          : "top";
-
-        dom.style[ styleAttribute ] = change.value + "px";
+        room.state.players.onChange = function (player, sessionId) {
+          var dom = players[sessionId];
+          dom.style.left = player.x + "px";
+          dom.style.top = player.y + "px";
+        }
       });
 
       window.addEventListener("keydown", function (e) {

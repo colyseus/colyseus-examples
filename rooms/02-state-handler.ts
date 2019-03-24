@@ -1,9 +1,18 @@
-import { Room, EntityMap, Client, nosync } from "colyseus";
+import { Room } from "colyseus";
+import { Schema, type, MapSchema } from "@colyseus/schema";
 
-export class State {
-    players: EntityMap<Player> = {};
+export class Player extends Schema {
+    @type("number")
+    x = Math.floor(Math.random() * 400);
 
-    @nosync
+    @type("number")
+    y = Math.floor(Math.random() * 400);
+}
+
+export class State extends Schema {
+    @type({ map: Player })
+    players = new MapSchema<Player>();
+
     something = "This attribute won't be sent to the client-side";
 
     createPlayer (id: string) {
@@ -22,11 +31,6 @@ export class State {
             this.players[ id ].y += movement.y * 10;
         }
     }
-}
-
-export class Player {
-    x = Math.floor(Math.random() * 400);
-    y = Math.floor(Math.random() * 400);
 }
 
 export class StateHandlerRoom extends Room<State> {

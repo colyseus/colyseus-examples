@@ -42,10 +42,9 @@ Open [http://localhost:2567](http://localhost:2567) in your browser.
 
 ## Deployment for prototyping
 
-You can easily deploy Colyseus Examples on Heroku and Zeit Now.
+You can easily deploy Colyseus Examples on Heroku.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/colyseus/colyseus-examples)
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/colyseus/colyseus-examples)
 
 ## License
 
