@@ -1,10 +1,10 @@
 import { Room, Client } from "colyseus";
-import * as request from "superagent";
+import request from "superagent";
 
 const FACEBOOK_APP_TOKEN = "135829507120512|3a97320bee18f2286d6243dcf4cc7a23";
 
 export class AuthRoom extends Room {
-    onInit (options) {
+    onInit (options: any) {
         console.log("StateHandlerRoom created!", options);
     }
 
@@ -19,15 +19,15 @@ export class AuthRoom extends Room {
         return response.body.data;
     }
 
-    onJoin (client) {
+    onJoin (client: Client) {
         console.log(client.sessionId, "joined successfully");
     }
 
-    onLeave (client) {
+    onLeave (client: Client) {
         console.log(client.sessionId, "left");
     }
 
-    onMessage (client, data) {
+    onMessage (client: Client, data: any) {
         console.log("AuthRoom received message from", client.sessionId, ":", data);
     }
 
