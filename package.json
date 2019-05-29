@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
-    "bundle-colyseus-client": "browserify ./node_modules/colyseus.js/lib/index.js -s Colyseus -o static/colyseus.js",
-    "build": "npm run bundle-colyseus-client",
     "heroku-postbuild": "npm run build"
   },
   "engines": {
@@ -17,7 +15,6 @@
   "dependencies": {
     "@colyseus/monitor": "^0.1.7",
     "colyseus": "^0.10.7",
-    "colyseus.js": "^0.10.2",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
     "serve-index": "^1.8.0",
