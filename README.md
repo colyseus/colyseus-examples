@@ -34,7 +34,6 @@ On this repository you can find basic usage examples of how to use Colyseus alon
 git clone https://github.com/colyseus/colyseus-examples.git
 cd colyseus-examples
 npm install
-npm run bundle-colyseus-client
 npm start
 ```
 
