@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@colyseus/monitor": "^0.1.7",
+    "@colyseus/monitor": "^0.10.0",
     "colyseus": "^0.10.7",
     "express": "^4.14.0",
     "nodemon": "^1.11.0",
