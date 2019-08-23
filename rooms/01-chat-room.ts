@@ -4,7 +4,7 @@ export class ChatRoom extends Room {
     // this room supports only 4 clients connected
     maxClients = 4;
 
-    onInit (options) {
+    onCreate (options) {
         console.log("BasicRoom created!", options);
     }
 

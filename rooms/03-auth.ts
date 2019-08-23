@@ -4,11 +4,11 @@ import request from "superagent";
 const FACEBOOK_APP_TOKEN = "135829507120512|3a97320bee18f2286d6243dcf4cc7a23";
 
 export class AuthRoom extends Room {
-    onInit (options: any) {
+    onCreate (options: any) {
         console.log("StateHandlerRoom created!", options);
     }
 
-    async onAuth (options: any) {
+    async onAuth (client: Client, options: any) {
         const response = await request.get(`https://graph.facebook.com/debug_token`).
             query({
                 input_token: options.accessToken,
@@ -19,8 +19,9 @@ export class AuthRoom extends Room {
         return response.body.data;
     }
 
-    onJoin (client: Client) {
+    onJoin (client: Client, options: any, auth: any) {
         console.log(client.sessionId, "joined successfully");
+        console.log("Auth data: ", auth);
     }
 
     onLeave (client: Client) {

@@ -1,4 +1,4 @@
-import { Room } from "colyseus";
+import { Room, Client } from "colyseus";
 import { Schema, type, MapSchema } from "@colyseus/schema";
 
 export class Player extends Schema {
@@ -34,13 +34,15 @@ export class State extends Schema {
 }
 
 export class StateHandlerRoom extends Room<State> {
-    onInit (options) {
+    maxClients = 4;
+
+    onCreate (options) {
         console.log("StateHandlerRoom created!", options);
 
         this.setState(new State());
     }
 
-    onJoin (client) {
+    onJoin (client: Client) {
         this.state.createPlayer(client.sessionId);
     }
 

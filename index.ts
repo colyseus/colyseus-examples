@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import serveIndex from 'serve-index';
+import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'colyseus';
 import { monitor } from '@colyseus/monitor';
@@ -9,33 +10,33 @@ import { monitor } from '@colyseus/monitor';
 import { ChatRoom } from "./rooms/01-chat-room";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
-import { CreateOrJoinRoom } from "./rooms/04-create-or-join-room";
 
-const port = Number(process.env.PORT || 2567);
+const port = Number(process.env.PORT || 2567) + Number(process.env.NODE_APP_INSTANCE || 0);
 const app = express();
+
+app.use(cors());
+app.use(express.json());
 
 // Attach WebSocket Server on HTTP Server.
 const gameServer = new Server({
-  server: createServer(app)
+  server: createServer(app),
+  express: app,
 });
 
 // Register ChatRoom as "chat"
-gameServer.register("chat", ChatRoom);
+gameServer.define("chat", ChatRoom);
 
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
-gameServer.register("chat_with_options", ChatRoom, {
-    custom_options: "you can use me on Room#onInit"
+gameServer.define("chat_with_options", ChatRoom, {
+    custom_options: "you can use me on Room#onCreate"
 });
 
 // Register StateHandlerRoom as "state_handler"
-gameServer.register("state_handler", StateHandlerRoom);
+gameServer.define("state_handler", StateHandlerRoom);
 
 // Register StateHandlerRoom as "state_handler"
-gameServer.register("auth", AuthRoom);
-
-// Register CreateOrJoin as "create_or_join"
-gameServer.register("create_or_join", CreateOrJoinRoom);
+gameServer.define("auth", AuthRoom);
 
 app.use('/', express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))

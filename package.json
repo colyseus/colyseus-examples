@@ -4,7 +4,7 @@
   "description": "Usage Examples of Colyseus Game Server",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch '**/*.ts' --exec ts-node index.ts",
+    "start": "ts-node index.ts",
     "heroku-postbuild": "npm run build"
   },
   "engines": {
@@ -13,16 +13,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@colyseus/monitor": "^0.10.0",
-    "colyseus": "^0.10.7",
+    "@colyseus/monitor": "^0.11.0",
+    "colyseus": "^0.11.0",
+    "colyseus.js": "^0.11.0",
+    "cors": "^2.8.5",
     "express": "^4.14.0",
-    "nodemon": "^1.11.0",
     "serve-index": "^1.8.0",
     "superagent": "^3.8.1"
   },
   "devDependencies": {
     "browserify": "^14.4.0",
     "ts-node": "^8.3.0",
-    "typescript": "^2.7.2"
+    "typescript": "^3.5.3"
   }
 }

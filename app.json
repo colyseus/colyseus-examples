@@ -1,8 +1,8 @@
 {
   "name": "Colyseus Multiplayer",
   "description": "Multiplayer Game Server for Node.js",
-  "repository": "https://github.com/gamestdio/colyseus",
-  "logo": "https://github.com/gamestdio/colyseus/blob/master/media/logo.png?raw=true",
+  "repository": "https://github.com/colyseus/colyseus",
+  "logo": "https://github.com/colyseus/colyseus/blob/master/media/logo.png?raw=true",
   "keywords": ["node", "multiplayer", "colyseus"],
   "env": {
     "NPM_CONFIG_PRODUCTION": {
