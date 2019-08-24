@@ -41,12 +41,13 @@
       var host = window.document.location.host.replace(/:.*/, '');
 
       var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':' + location.port : ''));
-      var room;
 
       function join_without_token () {
         // Logged into your app and Facebook.
-        room = client.join("auth");
-        room.onError.add(function(e) {
+        client.joinOrCreate("auth").then(room_instance => {
+            console.log("Joined successfully!"); // never reached!
+
+        }).catch(e => {
             console.error("Error", e);
         });
       }
@@ -61,13 +62,11 @@
               // for FB.getLoginStatus().
               if (response.status === 'connected') {
                   // Logged into your app and Facebook.
-                  room = client.join("auth", {
+                  client.joinOrCreate("auth", {
                       accessToken: response.authResponse.accessToken
-                  });
-                  room.onJoin.add(function (e) {
+                  }).then(room => {
                       console.log("Joined successfully!");
-                  });
-                  room.onError.add(function (e) {
+                  }).catch(e => {
                       console.error("Error", e);
                   });
 

@@ -30,46 +30,40 @@
     <script>
       var host = window.document.location.host.replace(/:.*/, '');
 
-      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':'+location.port : ''));
-      var room = client.join("chat");
-      room.listen("messages/:index", function(change) {
-        console.log("CHANGE!", change);
-      });
-
-      room.onJoin.add(function () {
+      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':'+location.port : ''));
+      client.joinOrCreate("chat").then(room => {
         console.log("joined");
+        room.onStateChange.once(function(state) {
+            console.log("initial room state:", state);
+        });
+
+        // new room state
+        room.onStateChange(function(state) {
+            // this signal is triggered on each patch
+        });
+
+        // listen to patches coming from the server
+        room.onMessage(function(message) {
+            var p = document.createElement("p");
+            p.innerHTML = message;
+            document.querySelector("#messages").appendChild(p);
+        });
+
+        // send message to room on submit
+        document.querySelector("#form").onsubmit = function(e) {
+            e.preventDefault();
+
+            var input = document.querySelector("#input");
+
+            console.log("input:", input.value);
+
+            // send data to room
+            room.send({ message: input.value });
+
+            // clear input
+            input.value = "";
+        }
       });
-
-      room.onStateChange.addOnce(function(state) {
-        console.log("initial room state:", state);
-      });
-
-      // new room state
-      room.onStateChange.add(function(state) {
-        // this signal is triggered on each patch
-      });
-
-      // listen to patches coming from the server
-      room.onMessage.add(function(message) {
-        var p = document.createElement("p");
-        p.innerHTML = message;
-        document.querySelector("#messages").appendChild(p);
-      });
-
-      // send message to room on submit
-      document.querySelector("#form").onsubmit = function(e) {
-        e.preventDefault();
-
-        var input = document.querySelector("#input");
-
-        console.log("input:", input.value);
-
-        // send data to room
-        room.send({ message: input.value });
-
-        // clear input
-        input.value = "";
-      }
 
     </script>
   </body>

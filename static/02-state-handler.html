@@ -39,71 +39,73 @@
     <button onclick="right()">right</button>
 
     <script>
-      var host = window.document.location.host.replace(/:.*/, '');
+        var host = window.document.location.host.replace(/:.*/, '');
 
-      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + host + (location.port ? ':' + location.port : ''));
-      var room = client.join("state_handler");
+        var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':' + location.port : ''));
+        var room;
+        client.joinOrCreate("state_handler").then(room_instance => {
+            room = room_instance
 
-      var players = {};
-      var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
+            var players = {};
+            var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
 
-      room.onJoin.add(function() {
-        // listen to patches coming from the server
-        room.state.players.onAdd = function(player, sessionId) {
-          var dom = document.createElement("div");
-          dom.className = "player";
-          dom.style.left = player.x + "px";
-          dom.style.top = player.y + "px";
-          dom.style.background = colors[Math.floor(Math.random() * colors.length)];
-          dom.innerHTML = "Player " + sessionId;
+            // listen to patches coming from the server
+            room.state.players.onAdd = function (player, sessionId) {
+                var dom = document.createElement("div");
+                dom.className = "player";
+                dom.style.left = player.x + "px";
+                dom.style.top = player.y + "px";
+                dom.style.background = colors[Math.floor(Math.random() * colors.length)];
+                dom.innerHTML = "Player " + sessionId;
 
-          players[sessionId] = dom;
-          document.body.appendChild(dom);
+                players[sessionId] = dom;
+                document.body.appendChild(dom);
+            }
+
+            room.state.players.onRemove = function (player, sessionId) {
+                document.body.removeChild(players[sessionId]);
+                delete players[sessionId];
+            }
+
+            room.state.players.onChange = function (player, sessionId) {
+                var dom = players[sessionId];
+                dom.style.left = player.x + "px";
+                dom.style.top = player.y + "px";
+            }
+
+            window.addEventListener("keydown", function (e) {
+                if (e.which === 38) {
+                    up();
+
+                } else if (e.which === 39) {
+                    right();
+
+                } else if (e.which === 40) {
+                    down();
+
+                } else if (e.which === 37) {
+                    left();
+                }
+            });
+
+        });
+
+        function up () {
+            room.send({ y: -1 });
         }
 
-        room.state.players.onRemove = function(player, sessionId) {
-          document.body.removeChild(players[sessionId]);
-          delete players[sessionId];
+        function right () {
+            room.send({ x: 1 });
         }
 
-        room.state.players.onChange = function (player, sessionId) {
-          var dom = players[sessionId];
-          dom.style.left = player.x + "px";
-          dom.style.top = player.y + "px";
+        function down () {
+            room.send({ y: 1 })
         }
-      });
 
-      window.addEventListener("keydown", function (e) {
-        console.log(e.which);
-        if (e.which === 38) {
-          up();
-
-        } else if (e.which === 39) {
-          right();
-
-        } else if (e.which === 40) {
-          down();
-
-        } else if (e.which === 37) {
-          left();
+        function left () {
+            room.send({ x: -1 })
         }
-      });
 
-      function up () {
-        room.send({ y: -1 });
-      }
-
-      function right () {
-        room.send({ x: 1 });
-      }
-
-      function down () {
-        room.send({ y: 1 })
-      }
-
-      function left () {
-        room.send({ x: -1 })
-      }
 
     </script>
   </body>
