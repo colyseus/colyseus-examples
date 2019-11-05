@@ -13,9 +13,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@colyseus/monitor": "^0.11.0",
-    "colyseus": "^0.11.0",
-    "colyseus.js": "^0.11.0",
+    "@colyseus/monitor": "^0.11.7",
+    "colyseus": "^0.11.20",
+    "colyseus.js": "^0.11.5",
     "cors": "^2.8.5",
     "express": "^4.14.0",
     "serve-index": "^1.8.0",
