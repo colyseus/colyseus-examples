@@ -56,7 +56,7 @@
                 dom.style.left = player.x + "px";
                 dom.style.top = player.y + "px";
                 dom.style.background = colors[Math.floor(Math.random() * colors.length)];
-                dom.innerHTML = "Player " + sessionId;
+                dom.innerText = "Player " + sessionId;
 
                 players[sessionId] = dom;
                 document.body.appendChild(dom);
