@@ -8,7 +8,6 @@ import { monitor } from '@colyseus/monitor';
 
 // Import demo room handlers
 import { ChatRoom } from "./rooms/01-chat-room";
-import { DummyRoom } from "./rooms/dummy";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
 
@@ -23,8 +22,6 @@ const gameServer = new Server({
   server: createServer(app),
   express: app,
 });
-
-gameServer.define("dummy", DummyRoom);
 
 // Register ChatRoom as "chat"
 gameServer.define("chat", ChatRoom);
