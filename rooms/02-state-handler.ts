@@ -42,7 +42,13 @@ export class StateHandlerRoom extends Room<State> {
         this.setState(new State());
     }
 
+    onAuth(client, options, req) {
+        console.log(req.headers.cookie);
+        return true;
+    }
+
     onJoin (client: Client) {
+        this.send(client, { hello: "world!" });
         this.state.createPlayer(client.sessionId);
     }
 
