@@ -19,10 +19,10 @@ export class ReconnectionRoom extends Room {
                 throw new Error("left_manually");
             }
 
-            await this.allowReconnection(client, 60);
+            const reconnectedClient = await this.allowReconnection(client, 60);
             console.log("Reconnected!");
 
-            this.send(client, "Welcome back!");
+            this.send(reconnectedClient, "Welcome back!");
 
         } catch (e) {
             console.log(e);
