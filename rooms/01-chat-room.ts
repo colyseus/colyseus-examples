@@ -5,24 +5,24 @@ export class ChatRoom extends Room {
     maxClients = 4;
 
     onCreate (options) {
-        console.log("BasicRoom created!", options);
+        console.log("ChatRoom created!", options);
+
+        this.onMessage("message", (client, message) => {
+            console.log("ChatRoom received message from", client.sessionId, ":", message);
+            this.broadcast("messages", `(${client.sessionId}) ${message}`);
+        });
     }
 
     onJoin (client) {
-        this.broadcast(`${ client.sessionId } joined.`);
+        this.broadcast("messages", `${ client.sessionId } joined.`);
     }
 
     onLeave (client) {
-        this.broadcast(`${ client.sessionId } left.`);
-    }
-
-    onMessage (client, data) {
-        console.log("BasicRoom received message from", client.sessionId, ":", data);
-        this.broadcast(`(${ client.sessionId }) ${ data.message }`);
+        this.broadcast("messages", `${ client.sessionId } left.`);
     }
 
     onDispose () {
-        console.log("Dispose BasicRoom");
+        console.log("Dispose ChatRoom");
     }
 
 }

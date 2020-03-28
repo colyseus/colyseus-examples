@@ -8,7 +8,7 @@
     </style>
 
     <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/master/dist/colyseus.js"></script>
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/0.13.0/dist/colyseus.js"></script>
 
   </head>
   <body>
@@ -40,17 +40,20 @@
         // Logged into your app and Facebook.
         client.joinOrCreate("reconnection").then(room_instance => {
             room = room_instance;
-            room.onMessage((message) => console.log(message));
-            room.onLeave(() => console.log("Bye, bye!"));
-
-            localStorage.setItem("roomId", room.id);
-            localStorage.setItem("sessionId", room.sessionId);
-
+            onjoin();
             console.log("Joined successfully!");
 
         }).catch(e => {
             console.error("Error", e);
         });
+      }
+
+      function onjoin() {
+          room.onMessage("status", (message) => console.log(message));
+          room.onLeave(() => console.log("Bye, bye!"));
+
+          localStorage.setItem("roomId", room.id);
+          localStorage.setItem("sessionId", room.sessionId);
       }
 
       function leave() {
@@ -68,12 +71,7 @@
 
         client.reconnect(roomId, sessionId).then(room_instance => {
             room = room_instance;
-            room.onMessage((message) => console.log(message));
-            room.onLeave(() => console.log("Bye, bye!"));
-
-            localStorage.setItem("roomId", room.id);
-            localStorage.setItem("sessionId", room.sessionId);
-
+            onjoin();
             console.log("Reconnected successfully!");
         }).catch(e => {
             console.error("Error", e);

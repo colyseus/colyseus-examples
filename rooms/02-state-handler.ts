@@ -40,6 +40,11 @@ export class StateHandlerRoom extends Room<State> {
         console.log("StateHandlerRoom created!", options);
 
         this.setState(new State());
+
+        this.onMessage("move", (client, data) => {
+            console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
+            this.state.movePlayer(client.sessionId, data);
+        });
     }
 
     onAuth(client, options, req) {
@@ -48,17 +53,12 @@ export class StateHandlerRoom extends Room<State> {
     }
 
     onJoin (client: Client) {
-        this.send(client, { hello: "world!" });
+        client.send("hello", "world");
         this.state.createPlayer(client.sessionId);
     }
 
     onLeave (client) {
         this.state.removePlayer(client.sessionId);
-    }
-
-    onMessage (client, data) {
-        console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
-        this.state.movePlayer(client.sessionId, data);
     }
 
     onDispose () {

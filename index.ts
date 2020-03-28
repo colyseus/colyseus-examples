@@ -1,6 +1,6 @@
-import path from 'path';
 import express from 'express';
 import serveIndex from 'serve-index';
+import path from 'path';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'colyseus';
@@ -38,8 +38,8 @@ gameServer.define("state_handler", StateHandlerRoom);
 gameServer.define("auth", AuthRoom);
 gameServer.define("reconnection", ReconnectionRoom);
 
-app.use('/', express.static(path.join(__dirname, "static")));
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
+app.use('/', express.static(path.join(__dirname, "static")));
 
 // (optional) attach web monitoring panel
 app.use('/colyseus', monitor());

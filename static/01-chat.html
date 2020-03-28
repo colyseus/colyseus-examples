@@ -8,7 +8,7 @@
     </style>
 
     <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/master/dist/colyseus.js"></script>
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/0.13.0/dist/colyseus.js"></script>
 
   </head>
   <body>
@@ -43,7 +43,7 @@
         });
 
         // listen to patches coming from the server
-        room.onMessage(function(message) {
+        room.onMessage("messages", function(message) {
             var p = document.createElement("p");
             p.innerText = message;
             document.querySelector("#messages").appendChild(p);
@@ -58,7 +58,7 @@
             console.log("input:", input.value);
 
             // send data to room
-            room.send({ message: input.value });
+            room.send("message", input.value);
 
             // clear input
             input.value = "";
