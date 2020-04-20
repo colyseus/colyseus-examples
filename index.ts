@@ -3,7 +3,7 @@ import serveIndex from 'serve-index';
 import path from 'path';
 import cors from 'cors';
 import { createServer } from 'http';
-import { Server } from 'colyseus';
+import { Server, LobbyRoom, RelayRoom } from 'colyseus';
 import { monitor } from '@colyseus/monitor';
 
 // Import demo room handlers
@@ -25,8 +25,16 @@ const gameServer = new Server({
   pingInterval: 0,
 });
 
-// Register ChatRoom as "chat"
-gameServer.define("chat", ChatRoom);
+// Define "lobby" room
+gameServer.define("lobby", LobbyRoom);
+
+// Define "relay" room
+gameServer.define("relay", RelayRoom, { maxClients: 4 })
+    .enableRealtimeListing();
+
+// Define "chat" room
+gameServer.define("chat", ChatRoom)
+    .enableRealtimeListing();
 
 // Register ChatRoom with initial options, as "chat_with_options"
 // onInit(options) will receive client join options + options registered here.
@@ -34,9 +42,17 @@ gameServer.define("chat_with_options", ChatRoom, {
     custom_options: "you can use me on Room#onCreate"
 });
 
-gameServer.define("state_handler", StateHandlerRoom);
-gameServer.define("auth", AuthRoom);
-gameServer.define("reconnection", ReconnectionRoom);
+// Define "state_handler" room
+gameServer.define("state_handler", StateHandlerRoom)
+    .enableRealtimeListing();
+
+// Define "auth" room
+gameServer.define("auth", AuthRoom)
+    .enableRealtimeListing();
+
+// Define "reconnection" room
+gameServer.define("reconnection", ReconnectionRoom)
+    .enableRealtimeListing();
 
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
 app.use('/', express.static(path.join(__dirname, "static")));
