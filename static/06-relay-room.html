@@ -59,7 +59,7 @@
 
         function join() {
             client.joinOrCreate("relay", {
-                name: document.getElementById('username').value || ""
+                name: document.getElementById('username').value
             }).then(room_instance => {
                 room = room_instance
 
@@ -76,7 +76,7 @@
                     dom.style.left = "0px";
                     dom.style.top = "0px";
                     dom.style.background = colors[Math.floor(Math.random() * colors.length)];
-                    dom.innerText = `${player.name} (${sessionId})`;
+                    dom.innerText = `${player.name || "[no name]"} (${sessionId})`;
 
                     players[sessionId] = dom;
                     document.body.appendChild(dom);
