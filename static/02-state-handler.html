@@ -8,7 +8,7 @@
     </style>
 
     <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/master/dist/colyseus.js"></script>
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/0.13.0/dist/colyseus.js"></script>
 
     <style type="text/css">
       .player {
@@ -91,19 +91,19 @@
         });
 
         function up () {
-            room.send({ y: -1 });
+            room.send("move", { y: -1 });
         }
 
         function right () {
-            room.send({ x: 1 });
+            room.send("move", { x: 1 });
         }
 
         function down () {
-            room.send({ y: 1 })
+            room.send("move", { y: 1 })
         }
 
         function left () {
-            room.send({ x: -1 })
+            room.send("move", { x: -1 })
         }
 
 

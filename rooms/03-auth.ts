@@ -6,6 +6,10 @@ const FACEBOOK_APP_TOKEN = "135829507120512|3a97320bee18f2286d6243dcf4cc7a23";
 export class AuthRoom extends Room {
     onCreate (options: any) {
         console.log("StateHandlerRoom created!", options);
+
+        this.onMessage("*", (client, type, message) => {
+            console.log("AuthRoom received message from", client.sessionId, ":", message);
+        });
     }
 
     async onAuth (client: Client, options: any) {
@@ -26,10 +30,6 @@ export class AuthRoom extends Room {
 
     onLeave (client: Client) {
         console.log(client.sessionId, "left");
-    }
-
-    onMessage (client: Client, data: any) {
-        console.log("AuthRoom received message from", client.sessionId, ":", data);
     }
 
     onDispose () {

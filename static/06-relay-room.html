@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; }
+    </style>
+
+    <!-- colyseus.js client -->
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/0.13.0/dist/colyseus.js"></script>
+
+    <style type="text/css">
+      .player {
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        padding-top: 24px;
+        box-sizing: border-box;
+        left: 0;
+        top: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h1>
+      <a href="https://github.com/colyseus/colyseus-examples"><img src="https://cdn.jsdelivr.net/gh/colyseus/colyseus@master/media/header.png" height="100" alt="colyseus" /></a>
+    </h1>
+
+    <p>This example shows how to use <code>RelayRoom</code>:</p>
+    <ul>
+        <li>Messages are broadcasted to all other clients.</li>
+        <li>It is <strong>client-authoritative</strong> instead of <strong>server-authoritative</strong>.</li>
+        <li><a href="https://docs.colyseus.io/builtin-rooms/relay/">See documentation</a></li>
+    </ul>
+
+    <strong>commands</strong><br>
+
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button onclick="join()">Join RelayRoom</button>
+    <button onclick="leave()">Leave room</button>
+
+    <br />
+    <button onclick="up()">up</button>
+    <button onclick="down()">down</button>
+    <br />
+    <button onclick="left()">left</button>
+    <button onclick="right()">right</button>
+
+    <script>
+        var host = window.document.location.host.replace(/:.*/, '');
+
+        var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':' + location.port : ''));
+        var room;
+
+        var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
+        var players = {};
+
+        function join() {
+            client.joinOrCreate("relay", {
+                name: document.getElementById('username').value
+            }).then(room_instance => {
+                room = room_instance
+
+                room.onLeave(() => console.log("Bye, bye."));
+
+                room.onMessage('move', ([sessionId, movement]) => {
+                    local_move(sessionId, movement);
+                });
+
+                // listen to patches coming from the server
+                room.state.players.onAdd = function (player, sessionId) {
+                    var dom = document.createElement("div");
+                    dom.className = "player";
+                    dom.style.left = "0px";
+                    dom.style.top = "0px";
+                    dom.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    dom.innerText = `${player.name || "[no name]"} (${sessionId})`;
+
+                    players[sessionId] = dom;
+                    document.body.appendChild(dom);
+                }
+
+                room.state.players.onRemove = function (player, sessionId) {
+                    document.body.removeChild(players[sessionId]);
+                    delete players[sessionId];
+                }
+
+                window.addEventListener("keydown", function (e) {
+                    if (e.which === 38) {
+                        up();
+
+                    } else if (e.which === 39) {
+                        right();
+
+                    } else if (e.which === 40) {
+                        down();
+
+                    } else if (e.which === 37) {
+                        left();
+                    }
+                });
+
+            });
+        }
+
+        function leave() {
+            if (room) {
+                room.leave();
+            }
+        }
+
+        function local_move(sessionId, movement) {
+            var dom = players[sessionId];
+            if (movement.x) {
+                dom.style.left = parseInt(dom.style.left) + movement.x + "px";
+            }
+            if (movement.y) {
+                dom.style.top = parseInt(dom.style.top) + movement.y + "px";
+            }
+        }
+
+        function up () {
+            var movement = { y: -10 };
+
+            // move locally instantly
+            local_move(room.sessionId, movement);
+
+            room.send("move", movement);
+        }
+
+        function right () {
+            var movement = { x: 10 };
+
+            // move locally instantly
+            local_move(room.sessionId, movement);
+
+            room.send("move", movement);
+        }
+
+        function down () {
+            var movement = { y: 10 };
+
+            // move locally instantly
+            local_move(room.sessionId, movement);
+
+            room.send("move", movement);
+        }
+
+        function left () {
+            var movement = { x: -10 };
+
+            // move locally instantly
+            local_move(room.sessionId, movement);
+
+            room.send("move", movement);
+        }
+
+    </script>
+
+  </body>
+</html>

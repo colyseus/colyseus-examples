@@ -14,15 +14,13 @@
   "license": "ISC",
   "dependencies": {
     "@colyseus/monitor": "^0.12.1",
-    "colyseus": "^0.12.4",
-    "cookie-parser": "^1.4.4",
+    "colyseus": "^0.13.0",
     "cors": "^2.8.5",
     "express": "^4.14.0",
     "serve-index": "^1.8.0",
     "superagent": "^3.8.1"
   },
   "devDependencies": {
-    "browserify": "^14.4.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }

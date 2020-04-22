@@ -5,11 +5,12 @@ export class ReconnectionRoom extends Room {
     }
 
     onJoin (client: Client, options: any, auth: any) {
-        this.send(client, "Welcome!");
+        client.send("status", "Welcome!");
     }
 
     async onLeave (client: Client, consented?: boolean) {
         console.log(client.sessionId, "left", { consented });
+
         try {
             if (consented) {
                 /*
@@ -19,18 +20,15 @@ export class ReconnectionRoom extends Room {
                 throw new Error("left_manually");
             }
 
-            const reconnectedClient = await this.allowReconnection(client, 60);
+            await this.allowReconnection(client, 60);
             console.log("Reconnected!");
 
-            this.send(reconnectedClient, "Welcome back!");
+            client.send("status", "Welcome back!");
 
         } catch (e) {
             console.log(e);
 
         }
-    }
-
-    onMessage (client: Client, data: any) {
     }
 
     onDispose () {

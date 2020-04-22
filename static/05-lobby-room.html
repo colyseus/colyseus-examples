@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+      body { font-family: Tahoma, Geneva, sans-serif; }
+    </style>
+
+    <!-- colyseus.js client -->
+    <script type="text/javascript" src="https://raw.githack.com/colyseus/colyseus.js/0.13.0/dist/colyseus.js"></script>
+
+  </head>
+  <body>
+    <h1>
+      <a href="https://github.com/colyseus/colyseus-examples"><img src="https://cdn.jsdelivr.net/gh/colyseus/colyseus@master/media/header.png" height="100" alt="colyseus" /></a>
+    </h1>
+
+    <p>This example shows how to use <code>LobbyRoom</code>:</p>
+    <ul>
+        <li>When you join a lobby, you'll receive the current list of rooms</li>
+        <li>Then, you'll receive updates when rooms are created, updated, or removed.</li>
+        <li>(All rooms on colyseus-examples have <code>.enableRealtimeListing()</code>, try joining other demos to see realtime updates here)</li>
+        <li><a href="https://docs.colyseus.io/builtin-rooms/lobby/">See documentation</a></li>
+    </ul>
+
+    <p>Open Developer Tools for log messages.</p>
+
+    <p><strong>Commands</strong></p>
+
+    <button onclick="join()">join lobby</button>
+    <button onclick="leave()">leave lobby</button>
+
+    <h2>All rooms:</h2>
+    <ul id="all_rooms"></ul>
+
+    <script>
+      var host = window.document.location.host.replace(/:.*/, '');
+      var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':' + location.port : ''));
+      var lobby;
+
+      function join () {
+        // Logged into your app and Facebook.
+        client.joinOrCreate("lobby").then(room_instance => {
+            lobby = room_instance;
+            onjoin();
+            console.log("Joined lobby room!");
+
+        }).catch(e => {
+            console.error("Error", e);
+        });
+      }
+
+      function onjoin() {
+          lobby.onMessage("rooms", (rooms) => {
+              allRooms = rooms;
+              update_full_list();
+
+              console.log("Received full list of rooms:", allRooms);
+          });
+
+          lobby.onMessage("+", ([roomId, room]) => {
+              const roomIndex = allRooms.findIndex((room) => room.roomId === roomId);
+              if (roomIndex !== -1) {
+                  console.log("Room update:", room);
+                  allRooms[roomIndex] = room;
+
+              } else {
+                  console.log("New room", room);
+                  allRooms.push(room);
+              }
+              update_full_list();
+          });
+
+          lobby.onMessage("-", (roomId) => {
+              console.log("Room removed", roomId);
+              allRooms = allRooms.filter((room) => room.roomId !== roomId);
+              update_full_list();
+          });
+
+          lobby.onLeave(() => {
+              allRooms = [];
+              update_full_list();
+              console.log("Bye, bye!");
+          });
+      }
+
+      function update_full_list() {
+        var el = document.getElementById('all_rooms');
+        el.innerHTML = allRooms.map(function(room) {
+            return "<li><code>" + JSON.stringify(room) + "</code></li>";
+        }).join("\n");
+
+      }
+
+      function leave() {
+        if (lobby) {
+          lobby.leave();
+
+        } else {
+          console.warn("Not connected.");
+        }
+      }
+    </script>
+
+  </body>
+</html>
