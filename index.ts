@@ -11,6 +11,7 @@ import { ChatRoom } from "./rooms/01-chat-room";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
 import { ReconnectionRoom } from './rooms/04-reconnection';
+import { CustomLobbyRoom } from './rooms/07-custom-lobby-room';
 
 const port = Number(process.env.PORT || 2567) + Number(process.env.NODE_APP_INSTANCE || 0);
 const app = express();
@@ -53,6 +54,9 @@ gameServer.define("auth", AuthRoom)
 // Define "reconnection" room
 gameServer.define("reconnection", ReconnectionRoom)
     .enableRealtimeListing();
+
+// Define "custom_lobby" room
+gameServer.define("custom_lobby", CustomLobbyRoom);
 
 app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
 app.use('/', express.static(path.join(__dirname, "static")));
