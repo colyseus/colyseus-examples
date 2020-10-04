@@ -15,20 +15,20 @@ export class State extends Schema {
 
     something = "This attribute won't be sent to the client-side";
 
-    createPlayer (id: string) {
-        this.players[ id ] = new Player();
+    createPlayer(sessionId: string) {
+        this.players.set(sessionId, new Player());
     }
 
-    removePlayer (id: string) {
-        delete this.players[ id ];
+    removePlayer(sessionId: string) {
+        this.players.delete(sessionId);
     }
 
-    movePlayer (id: string, movement: any) {
+    movePlayer (sessionId: string, movement: any) {
         if (movement.x) {
-            this.players[ id ].x += movement.x * 10;
+            this.players.get(sessionId).x += movement.x * 10;
 
         } else if (movement.y) {
-            this.players[ id ].y += movement.y * 10;
+            this.players.get(sessionId).y += movement.y * 10;
         }
     }
 }
@@ -48,7 +48,6 @@ export class StateHandlerRoom extends Room<State> {
     }
 
     onAuth(client, options, req) {
-        console.log(req.headers.cookie);
         return true;
     }
 
