@@ -14,7 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@colyseus/monitor": "^0.12.1",
-    "colyseus": "^0.14.0-alpha.18",
+    "colyseus": "^0.14.0",
     "cors": "^2.8.5",
     "express": "^4.14.0",
     "serve-index": "^1.8.0",
