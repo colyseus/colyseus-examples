@@ -72,6 +72,10 @@
                 delete players[sessionId];
             }
 
+            
+            room.onMessage("hello", (message) => {
+                console.log(message);
+            });
 
             window.addEventListener("keydown", function (e) {
                 if (e.which === 38) {
