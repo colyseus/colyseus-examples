@@ -8,7 +8,7 @@
     "heroku-postbuild": "npm run build"
   },
   "engines": {
-    "node": "8.9.1"
+    "node": ">=8.9.1"
   },
   "author": "",
   "license": "ISC",
