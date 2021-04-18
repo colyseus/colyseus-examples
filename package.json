@@ -1,27 +1,38 @@
 {
   "name": "colyseus-examples",
-  "version": "1.0.0",
-  "description": "Usage Examples of Colyseus Game Server",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "Usage Examples of Colyseus Game Server with Arena Hosting",
+  "main": "lib/index.js",
   "scripts": {
-    "start": "ts-node index.ts",
-    "heroku-postbuild": "npm run build"
+    "start": "ts-node-dev --respawn --transpile-only index.ts",
+    "loadtest": "colyseus-loadtest loadtest/example.ts --room my_room --numClients 2",
+    "build": "npm run clean && tsc && node node_modules/copyfiles/copyfiles package.json ./lib && node node_modules/copyfiles/copyfiles arena.env ./lib",
+    "clean": "node node_modules/rimraf/bin lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": ">=8.9.1"
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "@colyseus/loadtest": "^0.14.3",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.1",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^2.7.1",
+    "ts-node": "^8.1.0",
+    "ts-node-dev": "^1.0.0-pre.63",
+    "typescript": "^3.4.5",
+  },
   "dependencies": {
+    "@colyseus/arena": "^0.14.9",
     "@colyseus/monitor": "^0.14.0",
+    "@colyseus/social": "^0.10.9",
     "colyseus": "^0.14.0",
     "cors": "^2.8.5",
-    "express": "^4.14.0",
+    "express": "^4.16.4",
     "serve-index": "^1.8.0",
     "superagent": "^3.8.1"
-  },
-  "devDependencies": {
-    "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
   }
 }

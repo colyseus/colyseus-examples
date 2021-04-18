@@ -8,7 +8,11 @@
         "noImplicitAny": false,
         "experimentalDecorators": true,
         "sourceMap": false,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "strict": true,
+        "allowJs": true,
+        "strictNullChecks": false,
+        "forceConsistentCasingInFileNames": true
     },
     "include": [
       "**/*.ts"
