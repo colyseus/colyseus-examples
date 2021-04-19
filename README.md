@@ -22,8 +22,8 @@ On this repository you can find basic usage examples of how to use Colyseus alon
 
 **Live demo**
 
-- [See live](https://f4-w-e.colyseus.dev/)
-- [See monitor panel](https://f4-w-e.colyseus.dev/colyseus)
+- [See live](https://examples.colyseus.dev/)
+- [See monitor panel](https://examples.colyseus.dev/)
 
 ## How to run
 
