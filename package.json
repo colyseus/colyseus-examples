@@ -4,9 +4,8 @@
   "description": "Usage Examples of Colyseus Game Server with Arena Hosting",
   "main": "lib/index.js",
   "scripts": {
-    "start": "ts-node-dev --respawn --transpile-only index.ts",
-    "loadtest": "colyseus-loadtest loadtest/example.ts --room my_room --numClients 2",
-    "build": "npm run clean && tsc && node node_modules/copyfiles/copyfiles package.json ./lib && node node_modules/copyfiles/copyfiles arena.env ./lib",
+    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "npm run clean && tsc && node node_modules/copyfiles/copyfiles package.json ./lib && node node_modules/copyfiles/copyfiles arena.env ./lib && node node_modules/copyfiles/copyfiles -u 1 src/static/* ./lib",
     "clean": "node node_modules/rimraf/bin lib",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,17 +15,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@colyseus/loadtest": "^0.14.3",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.1",
     "copyfiles": "^2.4.1",
     "rimraf": "^2.7.1",
     "ts-node": "^8.1.0",
     "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "^3.4.5",
+    "typescript": "^3.4.5"
   },
   "dependencies": {
-    "@colyseus/arena": "^0.14.9",
+    "@colyseus/arena": "^0.14.13",
     "@colyseus/monitor": "^0.14.0",
     "@colyseus/social": "^0.10.9",
     "colyseus": "^0.14.0",

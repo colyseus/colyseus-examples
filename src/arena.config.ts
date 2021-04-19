@@ -2,6 +2,7 @@ import Arena from "@colyseus/arena";
 import { monitor } from "@colyseus/monitor";
 import path from 'path';
 import serveIndex from 'serve-index';
+import express from 'express';
 
 // Import demo room handlers
 import { Server, LobbyRoom, RelayRoom } from 'colyseus';
@@ -58,7 +59,7 @@ export default Arena({
 
     initializeExpress: (app) => {
         app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
-        app.use('/', app.static(path.join(__dirname, "static")));
+        app.use('/', express.static(path.join(__dirname, "static")));
 
         // (optional) attach web monitoring panel
         app.use('/colyseus', monitor());
@@ -69,6 +70,5 @@ export default Arena({
         /**
          * Before before gameServer.listen() is called.
          */
-        console.log(`Listening on http://localhost:${ port }`);
     }
 });
