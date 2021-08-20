@@ -12,6 +12,7 @@
         "strict": true,
         "allowJs": true,
         "strictNullChecks": false,
+        "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
     "include": [

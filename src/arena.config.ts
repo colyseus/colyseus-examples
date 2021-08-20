@@ -4,18 +4,20 @@ import path from 'path';
 import serveIndex from 'serve-index';
 import express from 'express';
 
+// import { uWebSocketsTransport} from "@colyseus/uwebsockets-transport";
+
 // Import demo room handlers
-import { Server, LobbyRoom, RelayRoom } from 'colyseus';
+import { LobbyRoom, RelayRoom } from 'colyseus';
 import { ChatRoom } from "./rooms/01-chat-room";
 import { StateHandlerRoom } from "./rooms/02-state-handler";
 import { AuthRoom } from "./rooms/03-auth";
 import { ReconnectionRoom } from './rooms/04-reconnection';
 import { CustomLobbyRoom } from './rooms/07-custom-lobby-room';
 
-const port = Number(process.env.PORT || 2567);
-
 export default Arena({
     getId: () => "Your Colyseus App",
+
+    // initializeTransport: (options) => new uWebSocketsTransport(options),
 
     initializeGameServer: (gameServer) => {
         // Define "lobby" room
@@ -28,7 +30,7 @@ export default Arena({
         // Define "chat" room
         gameServer.define("chat", ChatRoom)
             .enableRealtimeListing();
-        
+
         // Register ChatRoom with initial options, as "chat_with_options"
         // onInit(options) will receive client join options + options registered here.
         gameServer.define("chat_with_options", ChatRoom, {
@@ -60,6 +62,9 @@ export default Arena({
     initializeExpress: (app) => {
         app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
         app.use('/', express.static(path.join(__dirname, "static")));
+
+        // app.use(serveIndex(path.join(__dirname, "static"), {'icons': true}))
+        // app.use(express.static(path.join(__dirname, "static")));
 
         // (optional) attach web monitoring panel
         app.use('/colyseus', monitor());
