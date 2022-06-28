@@ -8,7 +8,7 @@
     </style>
 
     <!-- colyseus.js client -->
-    <script type="text/javascript" src="https://unpkg.com/colyseus.js@^0.14.0/dist/colyseus.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/colyseus.js@preview/dist/colyseus.js"></script>
 
     <style type="text/css">
       .player {
@@ -70,7 +70,7 @@
                 });
 
                 // listen to patches coming from the server
-                room.state.players.onAdd = function (player, sessionId) {
+                room.state.players.onAdd(function (player, sessionId) {
                     var dom = document.createElement("div");
                     dom.className = "player";
                     dom.style.left = "0px";
@@ -80,12 +80,12 @@
 
                     players[sessionId] = dom;
                     document.body.appendChild(dom);
-                }
+                });
 
-                room.state.players.onRemove = function (player, sessionId) {
+                room.state.players.onRemove(function (player, sessionId) {
                     document.body.removeChild(players[sessionId]);
                     delete players[sessionId];
-                }
+                });
 
                 window.addEventListener("keydown", function (e) {
                     if (e.which === 38) {
