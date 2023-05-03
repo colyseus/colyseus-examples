@@ -47,16 +47,18 @@ export class StateHandlerRoom extends Room<State> {
         });
     }
 
-    onAuth(client, options, req) {
-        return true;
-    }
+    // onAuth(client, options, req) {
+    //     return true;
+    // }
 
     onJoin (client: Client) {
-        client.send("hello", "world");
+        // client.send("hello", "world");
+        console.log(client.sessionId, "joined!");
         this.state.createPlayer(client.sessionId);
     }
 
     onLeave (client) {
+        console.log(client.sessionId, "left!");
         this.state.removePlayer(client.sessionId);
     }
 

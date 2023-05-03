@@ -17,6 +17,10 @@ import { CustomLobbyRoom } from './rooms/07-custom-lobby-room';
 export default Arena({
     getId: () => "Your Colyseus App",
 
+    options: {
+        devMode: true,
+    },
+
     // initializeTransport: (options) => new uWebSocketsTransport(options),
 
     initializeGameServer: (gameServer) => {
@@ -54,7 +58,7 @@ export default Arena({
 
         gameServer.onShutdown(function(){
             console.log(`game server is going down.`);
-          });
+        });
 
 
     },
