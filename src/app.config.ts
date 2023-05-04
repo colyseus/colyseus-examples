@@ -1,4 +1,4 @@
-import Arena from "@colyseus/arena";
+import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
 import path from 'path';
 import serveIndex from 'serve-index';
@@ -14,7 +14,7 @@ import { AuthRoom } from "./rooms/03-auth";
 import { ReconnectionRoom } from './rooms/04-reconnection';
 import { CustomLobbyRoom } from './rooms/07-custom-lobby-room';
 
-export default Arena({
+export default config({
     getId: () => "Your Colyseus App",
 
     options: {

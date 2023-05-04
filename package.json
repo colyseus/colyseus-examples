@@ -15,7 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@colyseus/uwebsockets-transport": "^0.15.0-preview.1",
+    "@colyseus/uwebsockets-transport": "^0.15.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.14",
     "copyfiles": "^2.4.1",
@@ -26,9 +26,9 @@
     "uwebsockets-express": "^1.1.14"
   },
   "dependencies": {
-    "@colyseus/arena": "^0.15.0-preview.1",
-    "@colyseus/monitor": "^0.15.0-preview.1",
-    "colyseus": "^0.15.0-preview.4",
+    "@colyseus/tools": "^0.15.0",
+    "@colyseus/monitor": "^0.15.0",
+    "colyseus": "^0.15.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "serve-index": "^1.8.0",
