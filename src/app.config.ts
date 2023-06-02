@@ -1,5 +1,6 @@
 import config from "@colyseus/tools";
 import { monitor } from "@colyseus/monitor";
+import { playground } from "@colyseus/playground";
 import path from 'path';
 import serveIndex from 'serve-index';
 import express from 'express';
@@ -15,13 +16,9 @@ import { ReconnectionRoom } from './rooms/04-reconnection';
 import { CustomLobbyRoom } from './rooms/07-custom-lobby-room';
 
 export default config({
-    getId: () => "Your Colyseus App",
-
     options: {
         devMode: true,
     },
-
-    // initializeTransport: (options) => new uWebSocketsTransport(options),
 
     initializeGameServer: (gameServer) => {
         // Define "lobby" room
@@ -67,10 +64,10 @@ export default config({
         app.use('/', serveIndex(path.join(__dirname, "static"), {'icons': true}))
         app.use('/', express.static(path.join(__dirname, "static")));
 
-        // app.use(serveIndex(path.join(__dirname, "static"), {'icons': true}))
-        // app.use(express.static(path.join(__dirname, "static")));
+        // (optional) client playground
+        app.use('/playground', playground);
 
-        // (optional) attach web monitoring panel
+        // (optional) web monitoring panel
         app.use('/colyseus', monitor());
     },
 
