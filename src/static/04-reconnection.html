@@ -52,8 +52,7 @@
           room.onMessage("status", (message) => console.log(message));
           room.onLeave(() => console.log("Bye, bye!"));
 
-          localStorage.setItem("roomId", room.id);
-          localStorage.setItem("sessionId", room.sessionId);
+          localStorage.setItem("reconnectionToken", room.reconnectionToken);
       }
 
       function leave() {
@@ -66,10 +65,9 @@
       }
 
       function reconnect() {
-        var roomId = localStorage.getItem("roomId");
-        var sessionId = localStorage.getItem("sessionId");
+        var reconnectionToken = localStorage.getItem("reconnectionToken");
 
-        client.reconnect(roomId, sessionId).then(room_instance => {
+        client.reconnect(reconnectionToken).then(room_instance => {
             room = room_instance;
             onjoin();
             console.log("Reconnected successfully!");

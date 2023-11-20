@@ -20,7 +20,7 @@ export class ReconnectionRoom extends Room {
                 throw new Error("left_manually");
             }
 
-            await this.allowReconnection(client, 60);
+            await this.allowReconnection(client, 10);
             console.log("Reconnected!");
 
             client.send("status", "Welcome back!");
