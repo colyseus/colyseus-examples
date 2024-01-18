@@ -22,8 +22,9 @@
     "uwebsockets-express": "^1.1.14"
   },
   "dependencies": {
+    "@colyseus/auth": "^0.15.8",
     "@colyseus/monitor": "^0.15.0",
-    "@colyseus/playground": "^0.15.2",
+    "@colyseus/playground": "^0.15.10",
     "@colyseus/tools": "^0.15.0",
     "colyseus": "^0.15.0",
     "cors": "^2.8.5",
