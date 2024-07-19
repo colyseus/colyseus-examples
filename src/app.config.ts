@@ -67,7 +67,7 @@ export default config({
         app.use(auth.prefix, auth.routes());
 
         // (optional) client playground
-        app.use('/playground', playground);
+        app.use('/playground', playground());
 
         // (optional) web monitoring panel
         app.use('/colyseus', monitor());

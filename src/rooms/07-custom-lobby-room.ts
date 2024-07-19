@@ -6,10 +6,10 @@ class LobbyState extends Schema {
 }
 
 export class CustomLobbyRoom extends LobbyRoom {
+    state = new LobbyState();
+
     async onCreate(options) {
         await super.onCreate(options);
-
-        this.setState(new LobbyState());
     }
 
     onJoin(client: Client, options) {

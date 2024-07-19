@@ -45,12 +45,13 @@
         var room;
         client.joinOrCreate("state_handler").then(room_instance => {
             room = room_instance
+            var $ = Colyseus.getStateCallbacks(room);
 
             var players = {};
             var colors = ['red', 'green', 'yellow', 'blue', 'cyan', 'magenta'];
 
             // listen to patches coming from the server
-            room.state.players.onAdd(function (player, sessionId) {
+            $(room.state).players.onAdd(function (player, sessionId) {
                 var dom = document.createElement("div");
                 dom.className = "player";
                 dom.style.left = player.x + "px";
@@ -58,7 +59,7 @@
                 dom.style.background = colors[Math.floor(Math.random() * colors.length)];
                 dom.innerText = "Player " + sessionId;
 
-                player.onChange(function (changes) {
+                $(player).onChange(function (changes) {
                     dom.style.left = player.x + "px";
                     dom.style.top = player.y + "px";
                 });
@@ -67,11 +68,10 @@
                 document.body.appendChild(dom);
             });
 
-            room.state.players.onRemove(function (player, sessionId) {
+            $(room.state).players.onRemove(function (player, sessionId) {
                 document.body.removeChild(players[sessionId]);
                 delete players[sessionId];
             });
-
 
             room.onMessage("hello", (message) => {
                 console.log(message);
