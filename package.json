@@ -1,6 +1,6 @@
 {
   "name": "colyseus-examples",
-  "version": "1.0.1",
+  "version": "0.16.0",
   "description": "Basic examples demonstrating Colyseus features",
   "main": "lib/index.js",
   "scripts": {
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@colyseus/auth": "^0.16.0",
+    "@colyseus/core": "^0.16.0",
     "@colyseus/monitor": "^0.16.0",
     "@colyseus/playground": "^0.16.0",
     "@colyseus/tools": "^0.16.0",
