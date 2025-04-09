@@ -33,13 +33,12 @@ export class State extends Schema {
     }
 }
 
-export class StateHandlerRoom extends Room<State> {
+export class StateHandlerRoom extends Room {
     maxClients = 4;
+    state = new State();
 
     onCreate (options) {
         console.log("StateHandlerRoom created!", options);
-
-        this.setState(new State());
 
         this.onMessage("move", (client, data) => {
             console.log("StateHandlerRoom received message from", client.sessionId, ":", data);
